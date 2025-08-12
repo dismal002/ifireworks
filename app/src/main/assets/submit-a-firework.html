@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Firework</title>
+
+  <!-- Material Design Dependencies -->
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .mdc-text-field, .mdc-text-field--textarea {
+      width: 100%;
+    }
+    .form-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .form-section {
+      margin-top: 2rem;
+    }
+    .submit-button {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="mdc-typography--headline4">Submit A Firework</h1>
+
+  <form id="webhookForm" class="form-section">
+    <input type="hidden" id="webhookUrl" name="webhookUrl" value="https://discord.com/api/webhooks/1401400498837520504/NOwROPzZ3DdvPNSn0DEspwbqCWpFevO4VePxW0XUVeHOnPY_SSxRpWRBNsu1RRgfLIEZ" />
+
+    <div class="form-grid">
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="text" class="mdc-text-field__input" id="productName" placeholder=" " />
+        <span class="mdc-floating-label">Name</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="text" class="mdc-text-field__input" id="productBrand" placeholder=" " />
+        <span class="mdc-floating-label">Brand</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="text" class="mdc-text-field__input" id="productSKU" placeholder=" " />
+        <span class="mdc-floating-label">SKU</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="text" class="mdc-text-field__input" id="productCategory" placeholder=" " />
+        <span class="mdc-floating-label">Category</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="text" class="mdc-text-field__input" id="productDuration" placeholder=" " />
+        <span class="mdc-floating-label">Duration</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="number" class="mdc-text-field__input" id="productShots" placeholder=" " />
+        <span class="mdc-floating-label">Shots</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="url" class="mdc-text-field__input" id="productImgUrl" placeholder=" " />
+        <span class="mdc-floating-label">Image URL</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+
+      <label class="mdc-text-field mdc-text-field--outlined">
+        <input type="url" class="mdc-text-field__input" id="productDemoUrl" placeholder=" " />
+        <span class="mdc-floating-label">Demo URL</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+
+    <div class="form-section">
+      <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
+        <textarea class="mdc-text-field__input" id="productPerformance" rows="3" placeholder=" "></textarea>
+        <span class="mdc-floating-label">Performance</span>
+      </label>
+    </div>
+
+    <button class="mdc-button mdc-button--raised submit-button" type="submit">
+      <span class="mdc-button__label">Submit</span>
+    </button>
+
+    <div id="statusMessage" class="form-section"></div>
+  </form>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.mdc-text-field').forEach(el => mdc.textField.MDCTextField.attachTo(el));
+    });
+
+    document.getElementById('webhookForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const webhookUrl = document.getElementById('webhookUrl').value;
+      const statusMessageDiv = document.getElementById('statusMessage');
+      statusMessageDiv.textContent = 'Submitting Firework...';
+
+      if (!webhookUrl) {
+        statusMessageDiv.textContent = 'Invalid Webhook.';
+        return;
+      }
+
+      const jsonData = {
+        Name: document.getElementById('productName').value,
+        Brand: document.getElementById('productBrand').value,
+        SKU: document.getElementById('productSKU').value,
+        Category: document.getElementById('productCategory').value,
+        Duration: document.getElementById('productDuration').value,
+        Shots: parseInt(document.getElementById('productShots').value) || 0,
+        imgurl: document.getElementById('productImgUrl').value,
+        demo: document.getElementById('productDemoUrl').value,
+        Performance: document.getElementById('productPerformance').value
+      };
+
+      const payload = {
+        content: "```json\n" + JSON.stringify(jsonData, null, 2) + "\n```"
+      };
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          statusMessageDiv.textContent = 'Submitted sucessfully';
+          [
+            'productName','productBrand','productSKU','productCategory','productDuration','productShots','productImgUrl','productDemoUrl','productPerformance'
+          ].forEach(id => document.getElementById(id).value = '');
+        } else {
+          const errorText = await response.text();
+          statusMessageDiv.textContent = `Failed: ${response.status} ${response.statusText} - ${errorText}`;
+        }
+      } catch (error) {
+        statusMessageDiv.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

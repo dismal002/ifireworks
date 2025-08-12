@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading Custom items</title>
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="styles/style.css" rel="stylesheet">
+</head>
+<body>
+<h1>Loading Custom Fireworks in iFireworks</h1>
+<p>iFireworks uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a> to store and reference information about firework items. You can either use the provided Google Sheets template or you can write the JSON yourself.</p>
+<p>To use the template click the link to make a copy of the template then you can add your fireworks</p>
+<p> <a href="https://docs.google.com/spreadsheets/d/1VG4vZexZxJ4T5XgHLQaZNJn26-mpwOFYuqatHhPPGEQ/copy">Get the Template</a></p>
+<p>When using the template download as CSV and then use <a href="https://www.convertcsv.com/csv-to-json.htm">CSV to JSON</a> to convert it to allow it to be read by the app. Also make sure to remove all the rows you haven't used to prevent the app from creating empty items.</p>
+<table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+	<tbody>
+		<tr>
+			<td>Key</td>
+			<td>Data Type</td>
+			<td>Description</td>
+		</tr>
+		<tr>
+			<td>ID</td>
+			<td>integer</td>
+			<td>Numerical ID assigned to the firework item</td>
+		</tr>
+		<tr>
+			<td>Name</td>
+			<td>string</td>
+			<td>Name of the item</td>
+		</tr>
+		<tr>
+			<td>SKU</td>
+			<td>string</td>
+			<td>SKU of the item</td>
+		</tr>
+		<tr>
+			<td>Category</td>
+			<td>string</td>
+			<td>&quot;500G Cake&quot;, &quot;200G Cake&quot;, &quot;Novelties&quot;, &quot;NOAB&quot;, &quot;Rockets&quot;, &quot;Saturn Missile Battery&quot; , &quot;Girandola&quot;, &quot;Shells&quot;, or &quot;Roman Candles&quot; (case sensitive)</td>
+		</tr>
+		<tr>
+			<td>Duration</td>
+			<td>string</td>
+			<td>A numerical or &quot;varries&quot; if it is an assortment</td>
+		</tr>
+		<tr>
+			<td>Shots</td>
+			<td>integer</td>
+			<td>Number of shots of an item or 0 if the item does not have shots such as a sparkler.</td>
+		</tr>
+		<tr>
+			<td>imgurl</td>
+			<td>string</td>
+			<td>URL of an image of the product</td>
+		</tr>
+		<tr>
+			<td>demo</td>
+			<td>string</td>
+			<td>embed url of the product (https://www.youtube.com/embed/0T07_ArQFs0)</td>
+		</tr>
+		<tr>
+			<td>Performance</td>
+			<td>string</td>
+			<td>Item performance</td>
+		</tr>
+	</tbody>
+</table>
+<p>Any value except ints that does not have a value should not be left blank rather null should be entered</p>
+<h2>Example of valid JSON file accepted by iFireworks </h2>
+<code>
+<p>[<br />
+&nbsp;{<br />
+&nbsp; &nbsp;&quot;ID&quot;: 0,<br />
+&nbsp; &nbsp;&quot;Name&quot;: &quot;Comet Blast&quot;,<br />
+&nbsp; &nbsp;&quot;Brand&quot;: &quot;Dominator&quot;,<br />
+&nbsp; &nbsp;&quot;SKU&quot;: &quot;DM232A&quot;,<br />
+&nbsp; &nbsp;&quot;Category&quot;: &quot;200 G Cake&quot;,<br />
+&nbsp; &nbsp;&quot;Duration&quot;: &quot;10&quot;,<br />
+&nbsp; &nbsp;&quot;Shots&quot;: 7,<br />
+&nbsp; &nbsp;&quot;imgurl&quot;: &quot;https://dominatorfireworks.com/blog/wp-content/uploads/2024/01/DM232A-1.jpg&quot;,<br />
+&nbsp; &nbsp;&quot;demo&quot;: &quot;https://www.youtube.com/embed/0T07_ArQFs0?si=_lCmtcdQbrWOrI84&quot;,<br />
+&nbsp; &nbsp;&quot;Performance&quot;: &quot;A small package with a big effect! Each cake shots 7 shots high into the air with a burst you have to see to believe. A great value.&quot;<br />
+&nbsp;},<br />
+&nbsp;{<br />
+&nbsp; &nbsp;&quot;ID&quot;: 1,<br />
+&nbsp; &nbsp;&quot;Name&quot;: &quot;Catapult&quot;,<br />
+&nbsp; &nbsp;&quot;Brand&quot;: &quot;Dominator&quot;,<br />
+&nbsp; &nbsp;&quot;SKU&quot;: &quot;DM226&quot;,<br />
+&nbsp; &nbsp;&quot;Category&quot;: &quot;200 G Cake&quot;,<br />
+&nbsp; &nbsp;&quot;Duration&quot;: &quot;20&quot;,<br />
+&nbsp; &nbsp;&quot;Shots&quot;: 16,<br />
+&nbsp; &nbsp;&quot;imgurl&quot;: &quot;https://dominatorfireworks.com/blog/wp-content/uploads/2024/01/DM226-3.jpg&quot;,<br />
+&nbsp; &nbsp;&quot;demo&quot;: &quot;https://www.youtube.com/embed/CygPyI0P8Uo&quot;,<br />
+&nbsp; &nbsp;&quot;Performance&quot;: &quot;Flying fish and colorful strobe&quot;<br />
+&nbsp;}</p>
+<p>]</p>
+
+ </code>
+</body>
+</html>
